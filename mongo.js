@@ -505,5 +505,65 @@ const getPosts = (myLimit, myPage, mySortField, mySortOrder, myFilterField, myFi
 // getPosts(10, 0, "author", 1, "category", "sint");
 // getPosts("", null, "", "", "", "");
 
-// db.blogs50.find({});
+// db.blogs50.find({id: 51});
 
+
+const findSingleBlogPost =  (blogId) => {
+    return db.blogs50.find({id:blogId}).toArray();
+}
+
+// findSingleBlogPost(7);
+
+const getPostsCollectionLength = () => {
+    return db.blogs50.count();
+}
+
+// getPostsCollectionLength();
+
+const makePost = (myTitle, myText, myAuthor, myCategory) => {
+    const title = myTitle ? myTitle : "";
+    const text = myText ? myText : "";
+    const author = myAuthor ? myAuthor : "";
+    const category = myCategory ? myCategory : "";
+    
+    const newBlog = {
+        createdAt : new Date(),
+        title : title,
+        text : text,
+        author : author,
+        category : category,
+        lastModified : new Date(),
+        id : getPostsCollectionLength() + 1
+    }
+    
+    return db.blogs50.insertOne(newBlog);
+    
+}
+
+// makePost("H", "I", "J", "K");
+
+
+const  updatePost = (myBlogId, myTitle, myText, myAuthor, myCategory) => {
+    
+    const blogToUpdate = readBlog(myBlogId)[0];
+    
+    
+    const title = myTitle ? myTitle : blogToUpdate.title;
+    const text = myText ? myText : blogToUpdate.text;
+    const author = myAuthor ? myAuthor : blogToUpdate.author;
+    const category = myCategory ? myCategory : blogToUpdate.category;
+    
+    const updateObject = {
+        title : title,
+        text : text,
+        author : author,
+        category : category,
+        lastModified : new Date()
+    }
+    
+    return db.blogs50.updateOne({id : myBlogId}, {$set: updateObject});
+    
+}
+
+// updatePost(51, "newtitle", "", "", "");
+// console.log(readBlog(51)[0]);
