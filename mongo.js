@@ -542,12 +542,9 @@ const makePost = (myTitle, myText, myAuthor, myCategory) => {
 
 // makePost("H", "I", "J", "K");
 
-
 const  updatePost = (myBlogId, myTitle, myText, myAuthor, myCategory) => {
     
     const blogToUpdate = readBlog(myBlogId)[0];
-    
-    
     const title = myTitle ? myTitle : blogToUpdate.title;
     const text = myText ? myText : blogToUpdate.text;
     const author = myAuthor ? myAuthor : blogToUpdate.author;
@@ -567,3 +564,21 @@ const  updatePost = (myBlogId, myTitle, myText, myAuthor, myCategory) => {
 
 // updatePost(51, "newtitle", "", "", "");
 // console.log(readBlog(51)[0]);
+
+const deleteThese = [1,2,3,4,5];
+const deletePosts = (blogIds) => {
+    
+    for (let id of deleteThese) {
+        db.blogs50.deleteOne({id:id})
+    }    
+    
+}
+
+deletePosts(deleteThese);
+
+
+
+
+
+
+
